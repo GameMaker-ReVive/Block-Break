@@ -6,6 +6,7 @@ using UnityEngine;
 public class block : MonoBehaviour
 {
     public Material[] HP;
+    public GameManager gamemanager;
     int i;
     
     private void Start()
@@ -21,13 +22,14 @@ public class block : MonoBehaviour
         {
             if (i == 0)
             {
+                gamemanager.Break();
                 Destroy(gameObject);
                 
             }
             else
                 {
                     gameObject.GetComponent<Renderer>().material = HP[i - 1];
-                    
+                    gamemanager.Hit();
                     i--;
                 }
             }

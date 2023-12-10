@@ -13,10 +13,15 @@ public class GameManager : MonoBehaviour
     public int scr;
     void Update(){
         
-        Break();
+     
     }
-    void Break(){
-       
+    public void Break(){
+       scr += 20;
+       ScoreJudge();
+    }
+    public void Hit(){
+        scr += 10;
+        ScoreJudge();
     }
     void ScoreJudge(){
         score.text = "Score : " + scr;
