@@ -4,28 +4,25 @@ using UnityEngine;
 
 public class ball : MonoBehaviour
 {
-    public Rigidbody rb;
-
+    public Rigidbody rigid;
+    Vector3 lastVelocity;
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        PushStart();
-    }
-    private void FixedUpdate()
-    {
-        
+        rigid = GetComponent<Rigidbody>();
+        rigid.AddForce(Vector3.down * 10f, ForceMode.Impulse);
     }
 
-/*    void LaunchBall()
+    private void Update()
     {
-        // 랜덤한 방향으로 초기 힘을 가해서 공을 발사
-        Vector3 initialDirection = new Vector3(Random.Range(-1f, 1f), 1f, Random.Range(-1f, 1f)).normalized;
-        rb.AddForce(initialDirection * 10f, ForceMode.Impulse);
-    }*/
+        lastVelocity = rigid.velocity;
+    }
+
+    private void OnCollisionEnter(Collision coll)
+    {
+        var speed = lastVelocity.magnitude;
+        var dir = Vector3.Reflect(lastVelocity.normalized, coll.contacts[0].normal);
     
-    void PushStart()
-    {
-        rb.AddForce(Vector3.down * 15f, ForceMode.Impulse);
+        rigid.velocity = dir * Mathf.Max(speed, 10f);
     }
 
 }
