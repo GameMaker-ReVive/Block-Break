@@ -7,6 +7,7 @@ public class block : MonoBehaviour
 {
     public Material[] HP;
     int i;
+    
     private void Start()
     {
         int ran = Random.Range(0, HP.Length);
@@ -21,11 +22,13 @@ public class block : MonoBehaviour
             if (i == 0)
             {
                 Destroy(gameObject);
+                
             }
             else
                 {
                     gameObject.GetComponent<Renderer>().material = HP[i - 1];
-                i--;
+                    
+                    i--;
                 }
             }
         }

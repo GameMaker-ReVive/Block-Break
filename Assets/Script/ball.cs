@@ -5,17 +5,23 @@ using UnityEngine;
 public class ball : MonoBehaviour
 {
     public Rigidbody rb;
-
+    public int scr;
+    public GameManager gamemanager;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        PushStart();
+     
     }
     private void FixedUpdate()
     {
         
     }
-
+    void Update(){
+        if (Input.GetKeyDown(KeyCode.Space)){
+            PushStart();
+            gameObject.transform.SetParent(null);
+        }
+    }
 /*    void LaunchBall()
     {
         // 랜덤한 방향으로 초기 힘을 가해서 공을 발사
@@ -27,5 +33,17 @@ public class ball : MonoBehaviour
     {
         rb.AddForce(Vector3.down * 15f, ForceMode.Impulse);
     }
-
+    void OnCollisionEnter(Collision other){
+        if(other.gameObject.name == "down"){
+            Death();
+            gamemanager.Check();
+        }
+       
+       
+    }
+  
+    void Death(){
+        this.gameObject.SetActive(false);
+        Debug.Log("사망");
+    }
 }
