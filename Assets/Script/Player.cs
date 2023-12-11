@@ -13,10 +13,10 @@ public class Player : MonoBehaviour
     }
     void Move()
     {
-        float h = Input.GetAxis("Horizontal");
-
-        transform.position += new Vector3(h, 0, 0) * speed * Time.deltaTime;
-        
+        float horizontal = Input.GetAxis("Horizontal");
+        float posx = transform.position.x + (horizontal *speed * Time.deltaTime);
+        Vector3 temp_pos = new Vector3(Mathf.Clamp(posx, -7.5f, 7.5f), transform.position.y, transform.position.z);
+        transform.position = temp_pos;
     }
    
     
