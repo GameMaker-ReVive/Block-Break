@@ -36,6 +36,7 @@ public class ball : MonoBehaviour
     {
         rb.AddForce(Vector3.down * 15f, ForceMode.Impulse);
     }
+
     void OnCollisionEnter(Collision other){
 
         var speed = lastVelocity.magnitude;
@@ -48,13 +49,14 @@ public class ball : MonoBehaviour
             Death();
             gamemanager.Check();
             Debug.Log(gameObject.name);
+            
         }
        
        
     }
   
-    void Death(){
-        this.gameObject.SetActive(false);
+    public void Death(){
+        gameObject.SetActive(false);
         Debug.Log("사망");
     }
 }
