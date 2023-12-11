@@ -7,9 +7,11 @@ public class ball : MonoBehaviour
     public Rigidbody rb;
     public int scr;
     public GameManager gamemanager;
+    Vector3 lastVelocity;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        
      
     }
     private void FixedUpdate()
@@ -21,6 +23,7 @@ public class ball : MonoBehaviour
             PushStart();
             gameObject.transform.SetParent(null);
         }
+        lastVelocity = rb.velocity;
     }
 /*    void LaunchBall()
     {
@@ -34,9 +37,17 @@ public class ball : MonoBehaviour
         rb.AddForce(Vector3.down * 15f, ForceMode.Impulse);
     }
     void OnCollisionEnter(Collision other){
+
+        var speed = lastVelocity.magnitude;
+        var dir = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
+
+        rb.velocity = dir * Mathf.Max(speed, 10f);
+
+
         if(other.gameObject.name == "down"){
             Death();
             gamemanager.Check();
+            Debug.Log(gameObject.name);
         }
        
        
