@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class SeenLoad : MonoBehaviour
 {
+    
     public void GameStart(){
         SceneManager.LoadScene("GAME");
         Debug.Log("게임 시작");

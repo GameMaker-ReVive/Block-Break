@@ -11,13 +11,18 @@ public class GameManager : MonoBehaviour
     public RankingManager rm;
     public Text score;
     public Text end;
+    public Text nick;
     public int scr;
-
+    public string nickname;
     int set = 3;
-    void Update(){
-        
-     
+
+    public void Awake()
+    {
+        nickname = PlayerPrefs.GetString("name1");
+        Debug.Log(nickname);
+        nick.text = "Player : " + nickname;
     }
+  
     public void Break(){
        scr += 20;
        ScoreJudge();
@@ -46,9 +51,12 @@ public class GameManager : MonoBehaviour
         else if(playerBall[2].activeSelf == false && playerBall[1].activeSelf == false &&playerBall[0].activeSelf == false && set ==1){
            
             playerBallImg[0].SetActive(false);
+            PlayerPrefs.SetString("pname", nickname);
+            PlayerPrefs.SetFloat("pscore", scr);
+
             GameEnd();
             Debug.Log("게임종료");
-            rm.AddScore(scr);
+
             
         }
 

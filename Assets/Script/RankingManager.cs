@@ -4,34 +4,37 @@ using UnityEngine;
 using UnityEngine.UI;
 public class RankingManager : MonoBehaviour
 {
+    public float[] bestScore = new float[10];
+    public string[] bestName = new string[10];
     public Text[] rank;
-    public List<int> scores = new List<int>();
+    public void ScoreSet(float currentScore, string currentName)
+    {
+        PlayerPrefs.SetString("CurrentPlayerName", currentName);
+        PlayerPrefs.SetFloat("CurrentPlayerName", currentScore);
 
-    void Awake(){
-        
-     
-       
+        float tmpScore = 0f;
+        string tmpName = "";
 
-    }
-    public void AddScore(int src){
-        Debug.Log("AA");
-        scores.Add(src);
-        Rank();
-    }
-    void Rank(){
-        scores.Sort();
-        Ranking();
-    }
-    void Ranking(){
-        int end = 10;
-        foreach (int score in scores)
+        for (int i = 0; i < 10; i++)
         {
-            rank[0].text = score + "위 : " + scores;
-            if(end == 0){
-                end = 10;
-                break;
+            bestScore[i] = PlayerPrefs.GetFloat(i + "BestScore");
+            bestName[i] = PlayerPrefs.GetString(i + "BestName");
+
+            while (bestScore[i] < currentScore)
+            {
+                tmpScore = bestScore[i];
+                tmpName = bestName[i];
+                bestScore[i] = currentScore;
+                bestName[i] = currentName;
+
+                currentScore = tmpScore;
+                currentName = tmpName;
             }
         }
-        
+        for (int i = 0; i < 10; i++)
+        {
+            PlayerPrefs.SetFloat(i + "BestScore", bestScore[i]);
+            PlayerPrefs.SetString(i.ToString() + "BestName", bestName[i]);
+        }
     }
 }
