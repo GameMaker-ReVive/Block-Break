@@ -15,9 +15,8 @@ public class Player : MonoBehaviour
     void Move()
     {
         float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
 
-        transform.position += new Vector3(h, 0, v) * speed * Time.deltaTime;
+        transform.position += new Vector3(h, 0, 0) * speed * Time.deltaTime;
     }
 
 }

@@ -8,16 +8,18 @@ public class ball : MonoBehaviour
     public Rigidbody rigid;
     Vector3 lastVelocity;
     bool gamestart = true;
+    bool isdead = false;
     public GameObject player;
     public GameManager GM;
     public int point;
     public int image;
     void Start()
     {
+        PlayerPrefs.DeleteAll();
         rigid = GetComponent<Rigidbody>();
     }
 
-    private void Update()
+    public void Update()
     {
         lastVelocity = rigid.velocity;
         if (gamestart == true  && Input.GetKeyDown(KeyCode.Space))
@@ -25,10 +27,11 @@ public class ball : MonoBehaviour
             gameObject.transform.parent = null;
             push();
             gamestart = false;
+            isdead = false;
         }
     }
 
-    private void OnCollisionEnter(Collision coll)
+    public void OnCollisionEnter(Collision coll)
     {
         var speed = lastVelocity.magnitude;
         var dir = Vector3.Reflect(lastVelocity.normalized, coll.contacts[0].normal);
@@ -47,12 +50,17 @@ public class ball : MonoBehaviour
                 rigid.velocity = new Vector3(rigid.velocity.x, -3f, 0).normalized * speed;
             }
         }
-            if (coll.gameObject.tag == "dead")
+        if (coll.gameObject.tag == "dead" && isdead == false)
         {
+            Debug.Log("2น๘ตส?");
             gameObject.transform.parent = player.transform;
-            transform.position = player.transform.position + new Vector3(0, 2, 0);
             GetComponent<Rigidbody>().velocity = Vector3.zero;
+            lastVelocity = Vector3.zero;
+            transform.position = player.transform.position + new Vector3(0, 2, 0);
             gamestart = true;
+            isdead = true;
+            GM.ScoreSet(point, GM.name);
+            point = 0;
         }
 
         if (coll.gameObject.tag == "block")
